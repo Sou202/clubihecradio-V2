@@ -1,16 +1,21 @@
 import { defineConfig } from 'vite'
-// (gardez vos autres imports actuels...)
+import react from '@vitejs/plugin-react'
+import tsconfigPaths from 'vite-tsconfig-paths'
+import { tanstackViteConfig } from '@lovable.dev/vite-tanstack-config'
 
 export default defineConfig({
   plugins: [
-    // Votre plugin TanStack Start ou Router existant
+    react(),
+    tsconfigPaths(),
+    tanstackViteConfig,
   ],
-  // Désactivez le pré-rendu pour éviter l'erreur de recherche du serveur local
+  // Désactive complètement le pré-rendu qui pose problème sur Cloudflare Pages
   server: {
-    prerender: false,
+    prerender: {
+      enabled: false,
+    },
   },
-  // Si le plugin accepte des options de pré-rendu directement :
   ssr: {
     noExternal: true,
-  }
+  },
 })
