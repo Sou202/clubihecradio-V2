@@ -1,15 +1,16 @@
-// app.config.ts
-import { defineConfig } from '@tanstack/start/config'
+import { defineConfig } from 'vite'
+// (gardez vos autres imports actuels...)
 
 export default defineConfig({
+  plugins: [
+    // Votre plugin TanStack Start ou Router existant
+  ],
+  // Désactivez le pré-rendu pour éviter l'erreur de recherche du serveur local
   server: {
-    preset: 'cloudflare-pages',
+    prerender: false,
   },
-  tsr: {
-    // ...
-  },
-  // If prerendering is causing issues on deployment builds, disable it:
-  prerender: {
-    enabled: false,
-  },
+  // Si le plugin accepte des options de pré-rendu directement :
+  ssr: {
+    noExternal: true,
+  }
 })
