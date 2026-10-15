@@ -1,0 +1,6 @@
+import { createFileRoute } from '@tanstack/react-router';
+import { PageOpening, InstagramLink } from '@/components/editorial';
+import { Gallery } from '@/components/gallery';
+import { pageHead } from '@/lib/site-content';
+export const Route = createFileRoute('/galerie')({ component: GalleryPage, head: () => pageHead('Galerie', 'L’univers visuel de Club Radio Libertad. Retrouvez les photographies authentiques et les moments du club sur son compte Instagram officiel.') });
+function GalleryPage() { return <><PageOpening label="En images" title="L’esprit se voit aussi." description="Le son, la culture, la scène : une première immersion dans l’univers visuel Libertad." /><section className="section"><div className="section-inner"><Gallery /><div className="notice"><h2>Les vrais moments, à la source.</h2><p className="body-copy">Ces photographies sont des illustrations générées, et ne représentent ni les locaux, ni les membres, ni les événements réels du club. Les photographies officielles pourront les remplacer après validation.</p><InstagramLink /></div></div></section></>; }
