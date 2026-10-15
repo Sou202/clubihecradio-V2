@@ -1,0 +1,16 @@
+import { Link, useRouterState } from '@tanstack/react-router';
+import { useState, useEffect } from 'react';
+import { Instagram, Menu, X, ArrowUpRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import logo from '@/assets/logo-libertad.jpeg.asset.json';
+import { navigation, social } from '@/lib/site-content';
+
+function Brand() { return <Link to="/" className="brand" aria-label="Club Radio Libertad — Accueil"><img src={logo.url} width={49} height={57} alt="Logo officiel IHEC Radio Libertad" /><span><span className="brand-name">CLUB RADIO LIBERTAD</span><span className="brand-sub">IHEC CARTHAGE</span></span></Link>; }
+export function SiteHeader() {
+  const [open, setOpen] = useState(false);
+  const pathname = useRouterState({ select: s => s.location.pathname });
+  useEffect(() => { setOpen(false); }, [pathname]);
+  useEffect(() => { const close = (e: KeyboardEvent) => { if (e.key === 'Escape') setOpen(false); }; window.addEventListener('keydown', close); return () => window.removeEventListener('keydown', close); }, []);
+  return <><a href="#contenu" className="sr-only focus:not-sr-only focus:absolute focus:z-50 bg-background text-foreground p-3">Aller au contenu</a><header className="site-header"><div className="header-inner"><Brand /><nav className="desktop-nav" aria-label="Navigation principale">{navigation.map(n => <Link key={n.to} to={n.to} aria-current={pathname === n.to ? 'page' : undefined}>{n.label}</Link>)}<a href={social.instagram} target="_blank" rel="noreferrer" className="nav-instagram" aria-label="Instagram du club — nouvel onglet"><Instagram size={16} /></a></nav><Button variant="inverse" size="icon" className="mobile-toggle" aria-label={open ? 'Fermer le menu' : 'Ouvrir le menu'} aria-expanded={open} aria-controls="menu-mobile" onClick={() => setOpen(!open)}>{open ? <X /> : <Menu />}</Button></div>{open && <nav className="mobile-nav fade-in" id="menu-mobile" aria-label="Navigation mobile">{navigation.map(n => <Link key={n.to} to={n.to} aria-current={pathname === n.to ? 'page' : undefined}>{n.label}</Link>)}</nav>}</header></>;
+}
+export function SiteFooter() { return <footer className="footer"><div className="footer-top"><div><Brand /><p>Des voix, des idées, une même fréquence.<br />Le média étudiant de l’IHEC Carthage.</p></div><div><h3>Explorer</h3><nav className="footer-links" aria-label="Navigation de pied de page">{navigation.slice(1).map(n => <Link key={n.to} to={n.to}>{n.label}</Link>)}</nav></div><div><h3>Restons sur la même fréquence</h3><a href={social.instagram} target="_blank" rel="noreferrer" className="flex items-center gap-3 text-xs"><Instagram size={16} /> Instagram <ArrowUpRight size={14} /></a><p>@clubradio_ihec_libertad</p></div></div><div className="footer-bottom"><span>© {new Date().getFullYear()} Club Radio Libertad · IHEC Carthage, Tunisie</span><a href={social.source} target="_blank" rel="noreferrer">Le club sur le site officiel de l’IHEC ↗</a><span>La voix de tous les Carthaginois.</span></div></footer>; }
